@@ -4,15 +4,23 @@
 
 left Motor(1, 2);
 right Motor(3,4);
+int photoRes = A0; //photoresistor pin
 
 void setup(){
-gameInit();
+   pinMode(photoRes, INPUT);
+   gameInit();
 
 }
 
 
 void loop(){
-  //check photoResistor
+  //check photoResistor value to determine if dark place has been reached
+  lightLevel = analogRead(photoRes);
+  if (lightLevel < 300){
+    left.stopMotor();
+    right.stopMotor();
+    waitTime(); //enter wait stage of game
+  }
 }
 
 void gameInit(){
@@ -101,4 +109,10 @@ void turnLeft(int heading){
 
 void turnRight(int heading){
 
+}
+
+void waitTime(){
+  while (1){
+    
+  }
 }
