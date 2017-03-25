@@ -12,6 +12,7 @@ gameInit();
 
 
 void loop(){
+  //check photoResistor
 }
 
 void gameInit(){
