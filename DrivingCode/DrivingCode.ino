@@ -1,3 +1,6 @@
+#define trigPin 13
+#define echoPin 12
+
 #include <Motor.h>
 //Driving Code
 
@@ -13,6 +16,8 @@ int heading = 2; //straight ahead
 
 void setup(){
    pinMode(photoRes, INPUT); //attach photoresistor
+   pinMode(trigPin, OUTPUT); //trig, sonic pin
+   pinMode(echoPin, INPUT); //echo, sonic pin
    Serial.begin(9600);              //Starting serial communication
    gameInit(); // do initial check of surroundings
 
@@ -27,8 +32,19 @@ void loop(){
    Serial.print(incoming, DEC);
    }
    
+   long duration, distance;
+   digitalWrite(trigPin, LOW);  // Added this line
+  delayMicroseconds(2); // Added this line
+  digitalWrite(trigPin, HIGH);
+//  delayMicroseconds(1000); - Removed this line
+  delayMicroseconds(10); // Added this line
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration/2) / 29.1;
+   
   //check photoResistor value to determine if dark place has been reached
 
+   
   int lightLevel = analogRead(photoRes);
   if (lightLevel < 300){
     left.stopMotor();
@@ -36,7 +52,7 @@ void loop(){
     waitTime(); //enter wait stage of game
 
   }
-  if (range sensor indicates being near a wall slow down){
+  if (distance < 10.0){
     int speedL = left.getMotorSpeed();
     int speedR = right.getMotorSpeed();
     left.setMotorSpeed(speedL/2);
