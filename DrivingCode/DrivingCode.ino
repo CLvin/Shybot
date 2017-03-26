@@ -14,7 +14,7 @@ int heading = 2; //straight ahead
 
 void setup(){
    pinMode(photoRes, INPUT); //attach photoresistor
-   Particle.subscribe("direction", chooseDir); //subscribe to results from camera
+
    gameInit(); // do initial check of surroundings
 
 }
@@ -22,8 +22,8 @@ void setup(){
 
 void loop(){
   //check photoResistor value to determine if dark place has been reached
-  Particle.process();
-  lightLevel = analogRead(photoRes);
+
+  int lightLevel = analogRead(photoRes);
   if (lightLevel < 300){
     left.stopMotor();
     right.stopMotor();
@@ -105,7 +105,7 @@ void gameInit(){
     else if (heading == 4){
       turnLeft(45);
     }
-    Particle.process();
+
   }
   else if (direc == 2){
     turnRight(90);
@@ -121,7 +121,7 @@ void gameInit(){
     else if (heading == 4){
       turnLeft(45);
     }
-    Particle.process();
+
   }
   else{
     if (heading == 0){
@@ -136,7 +136,7 @@ void gameInit(){
     else if (heading == 4){
       turnLeft(45);
     }
-    Particle.process();
+
   }
   right.setMotorSpeed(70); //start moving forwards
   left.setMotorSpeed(70); //start moving forwards
@@ -194,8 +194,7 @@ void waitTime(){
 
 
   while (1){
-    //wait for info requests
-    Particle.process();
+
   }
 }
 void chooseDir(const char *direc, const char *data){
