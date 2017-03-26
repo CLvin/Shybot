@@ -1,0 +1,47 @@
+{
+  "name": "nodejs-repo-tools",
+  "version": "1.0.0",
+  "description": "Tools used to maintain and test Node.js repositories in the GoogleCloudPlaftorm organization.",
+  "repository": "https://github.com/GoogleCloudPlatform/nodejs-repo-tools",
+  "private": true,
+  "scripts": {
+    "lint": "semistandard \"**/*.js\"",
+    "check": "yarn check --strict-semver --integrity",
+    "test": "yarn run lint && yarn run check"
+  },
+  "main": "src/index.js",
+  "author": "Google Inc.",
+  "contributors": [
+    {
+      "name": "Jason Dobry",
+      "email": "jdobry@google.com"
+    },
+    {
+      "name": "Ace Nassri",
+      "email": "anassri@google.com"
+    }
+  ],
+  "license": "Apache-2.0",
+  "semistandard": {
+    "globals": [
+      "after",
+      "afterEach",
+      "before",
+      "beforeEach",
+      "describe",
+      "it"
+    ]
+  },
+  "engines": {
+    "node": ">=4.3.2"
+  },
+  "dependencies": {
+    "async": "2.1.4",
+    "proxyquire": "1.7.11",
+    "request": "2.79.0",
+    "supertest": "3.0.0"
+  },
+  "devDependencies": {
+    "semistandard": "9.2.1"
+  }
+}
