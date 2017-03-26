@@ -31,17 +31,23 @@ void loop(){
     int speedR = right.getMotorSpeed();
     left.setMotorSpeed(speedL/2);
     right.setMotorSpeed(speedR/2);
+    newPhoto = 1; //allow new photo
   }
   if (right bumper){
     turnLeft(22.5);
+    newPhoto = 1; //allow new photo
   }
   if (left bumper){
     turnRight(22.5);
+    newPhoto = 1; //allow new photo
   }
   if (both bumpers){
     driveBack();
+    newPhoto = 1; //allow new photo
   }
-
+  else { //if none of the other things occur
+    driveStraight(70);
+  }
 }
 
 void gameInit(){
@@ -126,6 +132,8 @@ void gameInit(){
 }
 
 void driveStraight(int speed){
+  left.setMotorSpeed(speed);
+  right.setMotorSpeed(speed);
 
 }
 
@@ -138,7 +146,7 @@ void turnRight(int heading){
 }
 
 void driveBack(){
-  
+
 }
 
 void waitTime(){
@@ -152,5 +160,6 @@ void chooseDir(const char *direction, const char *data){
   if (newPhoto == 1){
     direction = data[0]; //first number is direction
     heading = data[1]; //second number is heading
+    newPhoto = 0;
   }
 }
