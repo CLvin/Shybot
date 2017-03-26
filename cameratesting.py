@@ -1,8 +1,12 @@
 import numpy as np
 import cv2
-from matplotlib import pyplot as plt
 
-cap = cv2.VideoCapture(1)
+#import serial
+
+#from matplotlib import pyplot as plt
+
+#ser = serial.Serial('/dev/ttyACM0', 9600)
+cap = cv2.VideoCapture(0)
 
 # Capture frame-by-frame
 ret, frame = cap.read()
@@ -11,22 +15,22 @@ gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
 
 # Display the resulting frame
-cv2.imshow('input', gray);
-cv2.imwrite('testing.png',gray)
+#cv2.imshow('input', gray);
+#cv2.imwrite('testing.png',gray)
 
 #Blur image to blend but keep edges sharp
 blurred = cv2.bilateralFilter(gray,5,55,25)
-cv2.imwrite('testingFIL.png',blurred)
-cv2.imshow('input', blurred);
+#cv2.imwrite('testingFIL.png',blurred)
+#cv2.imshow('input', blurred);
 
-print blurred.shape
-print blurred.size
+#print blurred.shape
+#print blurred.size
 
 
 #EQUALIZE PICTURE
 equ = cv2.equalizeHist(blurred)
 res = np.hstack((blurred,equ)) #stacking images side-by-side
-cv2.imwrite('res.png',res)
+#cv2.imwrite('res.png',res)
 
 
 #Gradient testing
@@ -34,8 +38,8 @@ laplacian = cv2.Laplacian(blurred,cv2.CV_64F)
 laplacian2 = cv2.Laplacian(equ,cv2.CV_64F)
 
 
-cv2.imshow('input', equ);
-cv2.imshow('input2', laplacian2);
+#cv2.imshow('input', equ);
+#cv2.imshow('input2', laplacian2);
 
 
 #POI
@@ -104,29 +108,40 @@ mRR =whichLocation(mRR);
 
 
 varr = [vLL[0], vL[0], vM[0], vR[0], vRR[0]];
-mvarr = [np.mean(mLL), np.mean(mL), np.mean(mM), np.mean(mR), np.mean(mRR)];
+VARR = [vLL[1], vL[1], vM[1], vR[1], vRR[1]];
+
+mvarr = [mLL[0], mL[0], mM[0], mR[0], mRR[0]];
+MVARR = [mLL[1], mL[1], mM[1], mR[1], mRR[1]];
 
 #Debugging purposes--------------
 #print varr
-#print np.argsort(varr)
+print np.argsort(varr)
 #print mvarr
-#print np.argsort(mvarr)
+print np.argsort(mvarr)
+#print VARR
+#print MVARR
+print np.argsort(VARR)
+print np.argsort(MVARR)
 
 
 #OUTPUT AREA
 
-def toRobot(A, B):
+def toRobot(A, B, C, D):
     Asorted = np.argsort(A);
     Bsorted = np.argsort(B);
+    Csorted = np.argsort(C);
+    Dsorted = np.argsort(D);
 
     if Bsorted[1] == Asorted[3]:
         return Bsorted[1];
     else:
         return Bsorted[2];
 
-OUTPUT = toRobot(varr, mvarr);
+OUTPUT = toRobot(varr, mvarr, VARR, MVARR);
 
 print OUTPUT;
+
+#ser.write(OUTPUT);
 
 # When everything done, release the capture
 cap.release()

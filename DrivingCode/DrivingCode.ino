@@ -1,5 +1,7 @@
-#include <Motor.h>
+#define trigPin 13
+#define echoPin 12
 
+#include <Motor.h>
 //Driving Code
 
 #include <Arduino.h>
@@ -16,17 +18,41 @@ int bit3 = 13; //third bit of info from pi
 
 void setup(){
    pinMode(photoRes, INPUT); //attach photoresistor
+<<<<<<< HEAD
    pinMode(bit1, INPUT); //attach photoresistor
    pinMode(bit2, INPUT); //attach photoresistor
    pinMode(bit3, INPUT); //attach photoresistor 
 
+=======
+   pinMode(trigPin, OUTPUT); //trig, sonic pin
+   pinMode(echoPin, INPUT); //echo, sonic pin
+   Serial.begin(9600);              //Starting serial communication
+>>>>>>> origin/master
    gameInit(); // do initial check of surroundings
 }
 
 
 void loop(){
+   
+   if (Serial.available() > 0) {
+   int incoming = Serial.read();
+   Serial.print(“character recieved: “)
+   Serial.print(incoming, DEC);
+   }
+   
+   long duration, distance;
+   digitalWrite(trigPin, LOW);  // Added this line
+  delayMicroseconds(2); // Added this line
+  digitalWrite(trigPin, HIGH);
+//  delayMicroseconds(1000); - Removed this line
+  delayMicroseconds(10); // Added this line
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration/2) / 29.1;
+   
   //check photoResistor value to determine if dark place has been reached
 
+   
   int lightLevel = analogRead(photoRes);
   if (lightLevel < 300){
     left.stopMotor();
@@ -34,7 +60,11 @@ void loop(){
     waitTime(); //enter wait stage of game
 
   }
+<<<<<<< HEAD
   else if (range sensor indicates being near a wall slow down){
+=======
+  if (distance < 10.0){
+>>>>>>> origin/master
     int speedL = left.getMotorSpeed();
     int speedR = right.getMotorSpeed();
     left.setMotorSpeed(speedL/2);
