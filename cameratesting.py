@@ -1,9 +1,11 @@
 import numpy as np
 import cv2
-import serial
-from matplotlib import pyplot as plt
 
-ser = serial.Serial('/dev/ttyACM0', 9600)
+#import serial
+
+#from matplotlib import pyplot as plt
+
+#ser = serial.Serial('/dev/ttyACM0', 9600)
 cap = cv2.VideoCapture(0)
 
 # Capture frame-by-frame
@@ -135,10 +137,11 @@ def toRobot(A, B, C, D):
     else:
         return Bsorted[2];
 
-OUTPUT = toRobot(varr, mvarr);
+OUTPUT = toRobot(varr, mvarr, VARR, MVARR);
 
 print OUTPUT;
-ser.write(OUTPUT);
+
+#ser.write(OUTPUT);
 
 # When everything done, release the capture
 cap.release()
