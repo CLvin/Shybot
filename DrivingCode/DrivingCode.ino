@@ -26,6 +26,22 @@ void loop(){
     right.stopMotor();
     waitTime(); //enter wait stage of game
   }
+  if (range sensor indicates being near a wall slow down){
+    int speedL = left.getMotorSpeed();
+    int speedR = right.getMotorSpeed();
+    left.setMotorSpeed(speedL/2);
+    right.setMotorSpeed(speedR/2);
+  }
+  if (right bumper){
+    turnLeft(22.5);
+  }
+  if (left bumper){
+    turnRight(22.5);
+  }
+  if (both bumpers){
+    driveBack();
+  }
+
 }
 
 void gameInit(){
@@ -105,6 +121,8 @@ void gameInit(){
       turnLeft(45);
     }
   }
+  right.setMotorSpeed(70); //start moving forwards
+  left.setMotorSpeed(70); //start moving forwards
 }
 
 void driveStraight(int speed){
@@ -117,6 +135,10 @@ void turnLeft(int heading){
 
 void turnRight(int heading){
 
+}
+
+void driveBack(){
+  
 }
 
 void waitTime(){
