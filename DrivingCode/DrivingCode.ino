@@ -8,7 +8,7 @@ Motor right(2, 3);
 Motor left(4, 5);
 int photoRes = A0; //photoresistor pin
 int newPhoto = 1; //1 if want new photo, 0 if not ready for new photo
-int direction = 0; // NSEW
+int direc = 0; // NSEW
 int heading = 2; //straight ahead
 
 
@@ -61,20 +61,37 @@ void gameInit(){
   //facing direction 1
   //takePhoto
   delay(100);
-  Particle.process();
+
   turnLeft(90);
   //facing direction 2
   //takePhoto
   delay(100);
-  Particle.process();
+
   turnLeft(90);
   //facing direction 3
   //takePhoto
   delay(100);
-  Particle.process();
+
   //determine best heading based on photos
   //direction
-  if (direction == 0){
+  if (direc == 0){
+    turnLeft(90);
+    if (heading == 0){
+      turnRight(45);
+    }
+    else if (heading == 1){
+      turnRight(22.5);
+    }
+    else if (heading == 3){
+      turnLeft(22.5);
+    }
+    else if (heading == 4){
+      turnLeft(45);
+    }
+
+  }
+  else if (direc == 1){
+    turnLeft(90);
     turnLeft(90);
     if (heading == 0){
       turnRight(45);
@@ -90,24 +107,7 @@ void gameInit(){
     }
     Particle.process();
   }
-  else if (direction == 1){
-    turnLeft(90);
-    turnLeft(90);
-    if (heading == 0){
-      turnRight(45);
-    }
-    else if (heading == 1){
-      turnRight(22.5);
-    }
-    else if (heading == 3){
-      turnLeft(22.5);
-    }
-    else if (heading == 4){
-      turnLeft(45);
-    }
-    Particle.process();
-  }
-  else if (direction == 2){
+  else if (direc == 2){
     turnRight(90);
     if (heading == 0){
       turnRight(45);
@@ -191,18 +191,18 @@ void driveBack(){
 }
 
 void waitTime(){
-  //unsubscribe from direction events to stay hidden
+
 
   while (1){
     //wait for info requests
     Particle.process();
   }
 }
-void chooseDir(const char *direction, const char *data){
+void chooseDir(const char *direc, const char *data){
   if (newPhoto == 1){
-    direction = data[0]; //first number is direction
+    direc = data[0]; //first number is direction
     heading = data[1]; //second number is heading
     newPhoto = 0;
   }
-  Particle.process();
+
 }
