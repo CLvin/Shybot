@@ -1,11 +1,9 @@
-#include <Motor.h>
-
 //Driving Code
 
 #include <Arduino.h>
 
-Motor right(2, 3);
-Motor left(4, 5);
+left Motor(2, 3);
+right Motor(4,5);
 int photoRes = A0; //photoresistor pin
 int newPhoto = 1; //1 if want new photo, 0 if not ready for new photo
 int direction = 0; // NSEW
@@ -142,57 +140,27 @@ void gameInit(){
   left.setMotorSpeed(70); //start moving forwards
 }
 
-void driveStraight(int spd){
-  left.setMotorSpeed(spd);
-  right.setMotorSpeed(spd);
-  left.startMotor();
-  right.startMotor();
+void driveStraight(int speed){
+  left.setMotorSpeed(speed);
+  right.setMotorSpeed(speed);
+  Particle.process();
+}
+
+void turnLeft(int heading){
 
 }
 
-void turnLeft(int deg){
-  left.setMotorSpeed(-30);
-  right.setMotorSpeed(30);
-  left.startMotor();
-  right.startMotor();
-  if (deg == 22.5){
-    delay(50);
-  }
-  else if (deg == 45){
-    delay(100);
-  }
-  else{
-    delay(200);
-  }
-}
+void turnRight(int heading){
 
-void turnRight(int deg){
-  left.setMotorSpeed(30);
-  right.setMotorSpeed(-30);
-  left.startMotor();
-  right.startMotor();
-  if (deg == 22.5){
-    delay(50);
-  }
-  else if (deg == 45){
-    delay(100);
-  }
-  else{
-    delay(200);
-  }
 }
 
 void driveBack(){
-  left.setMotorSpeed(-75);
-  right.setMotorSpeed(-75);
-  left.startMotor();
-  right.startMotor();
-  delay(500);
+
 }
 
 void waitTime(){
   //unsubscribe from direction events to stay hidden
-
+  Particle.unsubscribe("direction", chooseDir);
   while (1){
     //wait for info requests
     Particle.process();
