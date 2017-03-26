@@ -1,5 +1,4 @@
 #include <Motor.h>
-
 //Driving Code
 
 #include <Arduino.h>
@@ -14,13 +13,20 @@ int heading = 2; //straight ahead
 
 void setup(){
    pinMode(photoRes, INPUT); //attach photoresistor
-
+   Serial.begin(9600);              //Starting serial communication
    gameInit(); // do initial check of surroundings
 
 }
 
 
 void loop(){
+   
+   if (Serial.available() > 0) {
+   int incoming = Serial.read();
+   Serial.print(“character recieved: “)
+   Serial.print(incoming, DEC);
+   }
+   
   //check photoResistor value to determine if dark place has been reached
 
   int lightLevel = analogRead(photoRes);
