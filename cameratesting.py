@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 
 # Capture frame-by-frame
 ret, frame = cap.read()
@@ -11,13 +11,13 @@ gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
 
 # Display the resulting frame
-cv2.imshow('input', gray);
-cv2.imwrite('testing.png',gray)
+#cv2.imshow('input', gray);
+#cv2.imwrite('testing.png',gray)
 
 #Blur image to blend but keep edges sharp
 blurred = cv2.bilateralFilter(gray,5,55,25)
-cv2.imwrite('testingFIL.png',blurred)
-cv2.imshow('input', blurred);
+#cv2.imwrite('testingFIL.png',blurred)
+#cv2.imshow('input', blurred);
 
 print blurred.shape
 print blurred.size
@@ -26,7 +26,7 @@ print blurred.size
 #EQUALIZE PICTURE
 equ = cv2.equalizeHist(blurred)
 res = np.hstack((blurred,equ)) #stacking images side-by-side
-cv2.imwrite('res.png',res)
+#cv2.imwrite('res.png',res)
 
 
 #Gradient testing
@@ -34,8 +34,8 @@ laplacian = cv2.Laplacian(blurred,cv2.CV_64F)
 laplacian2 = cv2.Laplacian(equ,cv2.CV_64F)
 
 
-cv2.imshow('input', equ);
-cv2.imshow('input2', laplacian2);
+#cv2.imshow('input', equ);
+#cv2.imshow('input2', laplacian2);
 
 
 #POI
