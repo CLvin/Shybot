@@ -5,10 +5,15 @@
 left Motor(1, 2);
 right Motor(3,4);
 int photoRes = A0; //photoresistor pin
+int newPhoto = 1; //1 if want new photo, 0 if not ready for new photo
+int direction = 0; // NSEW
+int heading = 2; //straight ahead
+
 
 void setup(){
-   pinMode(photoRes, INPUT);
-   gameInit();
+   pinMode(photoRes, INPUT); //attach photoresistor
+   Particle.subscribe("direction", chooseDir); //subscribe to results from camera
+   gameInit(); // do initial check of surroundings
 
 }
 
@@ -29,12 +34,15 @@ void gameInit(){
   turnLeft(90);
   //facing direction 1
   //takePhoto
+  delay(100);
   turnLeft(90);
   //facing direction 2
   //takePhoto
+  delay(100);
   turnLeft(90);
   //facing direction 3
   //takePhoto
+  delay(100);
   //determine best heading based on photos
   //direction
   if (direction == 0){
@@ -112,7 +120,15 @@ void turnRight(int heading){
 }
 
 void waitTime(){
+  //unsubscribe from direction events to stay hidden
+  Particle.unsubscribe("direction", chooseDir);
   while (1){
-    
+    //wait for info requests
+  }
+}
+void chooseDir(const char *direction, const char *data){
+  if (newPhoto == 1){
+    direction = data[0]; //first number is direction
+    heading = data[1]; //second number is heading
   }
 }
