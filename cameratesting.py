@@ -21,8 +21,8 @@ blurred = cv2.bilateralFilter(gray,5,55,25)
 #cv2.imwrite('testingFIL.png',blurred)
 #cv2.imshow('input', blurred);
 
-print blurred.shape
-print blurred.size
+#print blurred.shape
+#print blurred.size
 
 
 #EQUALIZE PICTURE
@@ -106,20 +106,29 @@ mRR =whichLocation(mRR);
 
 
 varr = [vLL[0], vL[0], vM[0], vR[0], vRR[0]];
-mvarr = [np.mean(mLL), np.mean(mL), np.mean(mM), np.mean(mR), np.mean(mRR)];
+VARR = [vLL[1], vL[1], vM[1], vR[1], vRR[1]];
+
+mvarr = [mLL[0], mL[0], mM[0], mR[0], mRR[0]];
+MVARR = [mLL[1], mL[1], mM[1], mR[1], mRR[1]];
 
 #Debugging purposes--------------
 #print varr
-#print np.argsort(varr)
+print np.argsort(varr)
 #print mvarr
-#print np.argsort(mvarr)
+print np.argsort(mvarr)
+#print VARR
+#print MVARR
+print np.argsort(VARR)
+print np.argsort(MVARR)
 
 
 #OUTPUT AREA
 
-def toRobot(A, B):
+def toRobot(A, B, C, D):
     Asorted = np.argsort(A);
     Bsorted = np.argsort(B);
+    Csorted = np.argsort(C);
+    Dsorted = np.argsort(D);
 
     if Bsorted[1] == Asorted[3]:
         return Bsorted[1];
